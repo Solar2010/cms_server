@@ -81,7 +81,7 @@ class JwtAuth
             ->setAudience($this->aud)
             ->setId($this->id, true)
             ->setIssuedAt($time)
-            ->setNotBefore($time + 60)
+            ->setNotBefore($time)
             ->setExpiration($time + env('JWT_TTL'))
             ->set('uid', $this->uid)
             ->sign(new Sha256(), env('JWT_SECRET'))

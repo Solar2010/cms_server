@@ -53,4 +53,13 @@ class AdminService
     {
         return md5($this->admin['salt'] . $password);
     }
+
+
+    public function getAdminList($adminId, $pageOption)
+    {
+        $this->admin = Admin::query()->where(['id' => $adminId])
+            ->first();
+        return Admin::query()
+            ->paginate($pageOption['limit'], '*', '', $pageOption['page']);
+    }
 }

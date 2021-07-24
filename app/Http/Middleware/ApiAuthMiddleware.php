@@ -16,11 +16,12 @@ class ApiAuthMiddleware
 {
     public $token = null;
 
+    public $uid = null;
+
     public function __construct(Request $request)
     {
         if($request->hasHeader('Token')) {
             $this->token = $request->header('Token');
-
         }
     }
 
@@ -47,11 +48,16 @@ class ApiAuthMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(is_null($this->token)) {
-            response()->json([['data' => [], 'message' => '未检测到有效的token'], 500]);
-        }
-        if(!$this->verifyToken($this->token)) {
-            response()->json([['data' => [], 'message' => 'token校验失败'], 401]);
+        try {
+            if (is_null($this->token)) {
+                return response()->json([ [ 'data' => [], 'message' => '未检测到有效的token' ]], 500 );
+            }
+            if (!$this->verifyToken($this->token)) {
+                $header = array('status' => 401);
+                return response()->json([ [ 'data' => [], 'message' => 'token校验失败' ]], 401 );
+            }
+        } catch (\Exception $e) {
+            return response()->json([ [ 'data' => [], 'message' => $e->getMessage() ]], 400 );
         }
         return $next($request);
     }

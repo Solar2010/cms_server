@@ -21,4 +21,12 @@ Route::get('/test', function (Request $request) {
     echo 1;
 });
 
+//管理端登录
 Route::post('login','LoginController@index');
+
+//管理员模块
+Route::namespace('Admin')->middleware(['api_auth'])->group(function () {
+   Route::get('/admin/list', 'ListController@index');
+   Route::get('/admin/role/list', 'RoleListController@index');
+   Route::get('/admin/permission/list', 'PermissionController@index');
+});
