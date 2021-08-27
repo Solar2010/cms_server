@@ -15,6 +15,11 @@ use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    /**
+     * 管理员列表
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $page = $request->get('page', 1);
@@ -22,5 +27,19 @@ class ListController extends Controller
         $uid = $this->uid;
         $list = (new AdminService())->getAdminList($uid, ['page' => $page, 'limit' => $limit]);
         return success($list);
+    }
+
+    /**
+     * 启用|禁用管理员
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeStatus(Request $request)
+    {
+        $id = $request->get('id');
+
+        (new AdminService())->changeAdminStatus($id);
+
+        return success([]);
     }
 }

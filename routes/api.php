@@ -27,6 +27,7 @@ Route::post('login','LoginController@index');
 //管理员模块
 Route::namespace('Admin')->middleware(['api_auth'])->group(function () {
    Route::get('/admin/list', 'ListController@index');
-   Route::get('/admin/role/list', 'RoleListController@index');
+   Route::get('/admin/change-status', 'ListController@changeStatus');
+   Route::get('/admin/role/list', 'Role@index');
    Route::get('/admin/permission/list', 'PermissionController@index');
 });

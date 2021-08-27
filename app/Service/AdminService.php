@@ -55,11 +55,38 @@ class AdminService
     }
 
 
+    /**
+     * 获取管理员列表
+     * @param $adminId
+     * @param $pageOption
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getAdminList($adminId, $pageOption)
     {
         $this->admin = Admin::query()->where(['id' => $adminId])
             ->first();
+        if(is_null($this->admin)) {
+            response()->json('管理员不存在', 500);
+        }
         return Admin::query()
             ->paginate($pageOption['limit'], '*', '', $pageOption['page']);
+    }
+
+    /**
+     * 启用|禁用管理员
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|int
+     */
+    public function changeAdminStatus($id)
+    {
+        $this->admin = Admin::query()->where(['id' => $id])
+            ->first();
+        if(is_null($this->admin)) {
+            return response()->json('管理员不存在', 500);
+        }
+
+        return Admin::query()
+            ->where(['id' => $id])
+            ->update(['status' => $this->admin->status == 1 ? 2 : 1]);
     }
 }

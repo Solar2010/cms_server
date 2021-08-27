@@ -32,6 +32,8 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        $events = $this->getEvents();
+
         Event::listen('user.login', function () {
 
         });
