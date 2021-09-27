@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Admin extends Base
 {
     /**
      * 与模型关联的表名
@@ -13,29 +12,19 @@ class Admin extends Model
      */
     protected $table = 'admin';
 
-    /**
-     * 指示模型是否自动维护时间戳
-     *
-     * @var bool
-     */
-    public $timestamps = true;
-
-    /**
-     * 模型日期列的存储格式。
-     *
-     * @var string
-     */
-    protected $dateFormat = 'U';
-
-    /**
-     * 需要被转换日期时间格式的字段
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
+    protected $fillable = [
+        'id',
+        'username',
+        'account',
+        'password',
+        'salt',
+        'email',
+        'mobile',
+        'is_super',
+        'last_login_time',
+        'operate_id',
+        'status',
+        'range_type'
     ];
 
     /**

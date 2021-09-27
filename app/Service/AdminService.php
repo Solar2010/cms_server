@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use App\Lib\Utils;
 use App\Models\Admin;
 
 class AdminService
@@ -34,11 +35,11 @@ class AdminService
             ])
             ->first();
         if(is_null($this->admin)) {
-            return false;
+            return notice(200003);
         }
-        $inputPassword = $this->generatePassword($password);
+        $inputPassword = $this->generatePassword($this->admin['salt'], $password);
         if($inputPassword != $this->admin['password']) {
-            return false;
+            return notice(200004);
         }
         return $this->admin;
 
@@ -49,9 +50,9 @@ class AdminService
      * @param $password
      * @return string
      */
-    public function generatePassword($password)
+    public function generatePassword($salt, $password)
     {
-        return md5($this->admin['salt'] . $password);
+        return md5($salt . $password);
     }
 
 
@@ -88,5 +89,42 @@ class AdminService
         return Admin::query()
             ->where(['id' => $id])
             ->update(['status' => $this->admin->status == 1 ? 2 : 1]);
+    }
+
+    /**
+     * 添加管理员
+     * @param $data
+     * @return array|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public function addAdmin($data)
+    {
+        $admin = Admin::query()
+            ->where('account', $data['account'])
+            ->first();
+        if(is_null($admin)) {
+            $salt = (new Utils())->generateSalt(4);
+            $data['password'] = $this->generatePassword($salt, $data['password']);
+            return Admin::query()
+                ->create($data);
+        }
+        return notice(200002);
+    }
+
+    /**
+     * 删除管理员
+     * @param $id
+     * @return mixed
+     */
+    public function deleteAdmin($id)
+    {
+        $admin = Admin::query()
+            ->where('id', $id)
+            ->first();
+        if(is_null($admin)) {
+            return notice(200003);
+        }
+        return Admin::query()
+            ->where('id', $id)
+            ->delete();
     }
 }

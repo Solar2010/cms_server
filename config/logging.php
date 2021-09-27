@@ -2,7 +2,7 @@
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
-
+$logPath = storage_path();
 return [
 
     /*
@@ -87,6 +87,12 @@ return [
 
         'errorlog' => [
             'driver' => 'errorlog',
+            'level' => 'debug',
+        ],
+        'sqllog' => [
+            'driver' => 'single',
+            'path'   => $logPath . '/logs/sqllog.log',
+            'tap' => [App\Lib\SqlLogFormatter::class], // 挂载日志格式接口
             'level' => 'debug',
         ],
     ],

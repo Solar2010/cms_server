@@ -20,8 +20,7 @@ class Controller extends BaseController
     {
         if($request->hasHeader('Token')) {
             $this->token = $request->header('Token');
+            $this->uid = JwtAuth::getInstance()->setToken($this->token)->decode()->getClaim('uid');
         }
-
-        $this->uid = JwtAuth::getInstance()->setToken($this->token)->decode()->getClaim('uid');
     }
 }

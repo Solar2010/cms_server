@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Backend\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Lib\Utils;
 use App\Service\AdminService;
 use Illuminate\Http\Request;
 
@@ -41,5 +42,40 @@ class ListController extends Controller
         (new AdminService())->changeAdminStatus($id);
 
         return success([]);
+    }
+
+    /**
+     * 添加管理员
+     * 邮箱唯一
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function add(Request $request)
+    {
+        $params = $request->post();
+
+        $rule = [
+            'username' => 'required',
+            'account'  => 'required',
+            'mobile'   => 'required',
+            'password' => 'required'
+        ];
+
+        $data = $this->validate($request, $rule);
+
+        $result = (new AdminService()) -> addAdmin($data);
+        return success($result);
+    }
+
+    /**
+     * 删除管理员
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $result = (new AdminService())->deleteAdmin($id);
+        return success($result);
     }
 }

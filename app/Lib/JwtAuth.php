@@ -75,7 +75,7 @@ class JwtAuth
      */
     public function encode()
     {
-        $time = time();
+        $time        = time();
         $this->token = (new Builder())
             ->setSubject($this->iss)
             ->setAudience($this->aud)
@@ -94,14 +94,15 @@ class JwtAuth
     /**
      * 解密token
      * @return \Lcobucci\JWT\Token
+     * @throws \Exception
      */
     public function decode()
     {
-
         if (!$this->decodeToken) {
             $this->decodeToken = (new Parser())->parse((string)$this->token);
-            $this->uid = $this->decodeToken->getClaim('uid');
+            $this->uid         = $this->decodeToken->getClaim('uid');
         }
+
 
         return $this->decodeToken;
 

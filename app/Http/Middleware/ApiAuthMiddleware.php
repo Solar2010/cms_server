@@ -32,9 +32,14 @@ class ApiAuthMiddleware
      */
     private function verifyToken($token)
     {
-        if(JwtAuth::getInstance()->setToken($token)->validate()) {
-            return true;
+        try {
+            if(JwtAuth::getInstance()->setToken($token)->validate()) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            dd($e);
         }
+
         return false;
     }
 
@@ -53,7 +58,6 @@ class ApiAuthMiddleware
                 return response()->json([ [ 'data' => [], 'message' => '未检测到有效的token' ]], 500 );
             }
             if (!$this->verifyToken($this->token)) {
-                $header = array('status' => 401);
                 return response()->json([ [ 'data' => [], 'message' => 'token校验失败' ]], 401 );
             }
         } catch (\Exception $e) {

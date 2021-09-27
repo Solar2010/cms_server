@@ -20,15 +20,15 @@ class PermissionService
             ->where([
                 'id' => $uid
             ])
-            -> first();
+            ->first();
 
-        if($admin->is_super === Admin::ADMIN_TYPE[0]) {
+        if ($admin->is_super === Admin::ADMIN_TYPE[0]) {
             $permissions = Permission::query()
                 ->get()
                 ->toArray();
-            $tree = $this->tree($permissions);
+            $tree        = $this->tree($permissions);
         }
-        return [$permissions, $tree];
+        return [ $permissions, $tree ];
     }
 
     /**
@@ -43,14 +43,27 @@ class PermissionService
         $tree = array();
 
         foreach ($permissions as $key => $value) {
-            if($value['pid'] == $id) {
-                $value['level'] = $level + 1;
+            if ($value['pid'] == $id) {
+                $value['level']    = $level + 1;
                 $value['children'] = $this->tree($permissions, $value['id'], $value['level']);
-                $tree[] = $value;
+                $tree[]            = $value;
                 unset($permissions[$key]);
             }
         }
 
         return $tree;
+    }
+
+    /**
+     * 添加权限
+     * @param $data
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public function addPermission($data)
+    {
+        $data['pid'] = $data['id'];
+        unset($data['id']);
+        return Permission::query()
+            ->create($data);
     }
 }
