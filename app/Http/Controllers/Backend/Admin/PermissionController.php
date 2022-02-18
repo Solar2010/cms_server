@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Service\PermissionService;
+use App\Service\RoleService;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -41,8 +42,27 @@ class PermissionController extends Controller
             'icon' => 'sometimes'
         ];
         $data = $this->validate($request, $rule);
+        if(!isset($data['icon']) || is_null($data['icon'])) {
+            $data['icon'] = '';
+        }
         $result = (new PermissionService())->addPermission($data);
 
         return success($result);
     }
+
+    /**
+     * 删除权限
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delPermissions(Request $request) {
+        $ids = $request->post('ids');
+        if(empty($ids)) {
+            return success([]);
+        }
+        $result = (new PermissionService())->delPermissions($ids);
+        return success($result);
+    }
+
+
 }

@@ -104,6 +104,7 @@ class AdminService
         if(is_null($admin)) {
             $salt = (new Utils())->generateSalt(4);
             $data['password'] = $this->generatePassword($salt, $data['password']);
+            $data['salt'] = $salt;
             return Admin::query()
                 ->create($data);
         }
@@ -126,5 +127,28 @@ class AdminService
         return Admin::query()
             ->where('id', $id)
             ->delete();
+    }
+
+    /**
+     * 编辑管理员
+     * @param $data
+     * @return int
+     */
+    public function editAdmin($data)
+    {
+        $admin = Admin::query()
+            ->where('id', $data['id'])
+            ->first();
+        if(is_null($admin)) {
+            return notice(200003);
+        }
+        $update = $data;
+        //不可更新账号
+        unset($update['account'], $update['id']);
+        $result = Admin::query()
+            ->where('id', $data['id'])
+            ->update($update);
+
+        return $result;
     }
 }

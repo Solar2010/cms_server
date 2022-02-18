@@ -2,6 +2,11 @@
 
 namespace App\Handlers;
 
+/**
+ * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder withTrashed()
+ * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder onlyTrashed()
+ * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder withoutTrashed()
+ */
 trait SoftDeletes
 {
     /**
@@ -18,7 +23,17 @@ trait SoftDeletes
      */
     public static function bootSoftDeletes()
     {
-        static::addGlobalScope(new SoftDeletingScope());
+        static::addGlobalScope(new SoftDeletingScope);
+    }
+
+    /**
+     * Initialize the soft deleting trait for an instance.
+     *
+     * @return void
+     */
+    public function initializeSoftDeletes()
+    {
+        $this->dates[] = $this->getDeletedAtColumn();
     }
 
     /**
@@ -30,11 +45,13 @@ trait SoftDeletes
     {
         $this->forceDeleting = true;
 
-        $deleted = $this->delete();
+        return tap($this->delete(), function ($deleted) {
+            $this->forceDeleting = false;
 
-        $this->forceDeleting = false;
-
-        return $deleted;
+            if ($deleted) {
+                $this->fireModelEvent('forceDeleted', false);
+            }
+        });
     }
 
     /**
@@ -47,7 +64,7 @@ trait SoftDeletes
         if ($this->forceDeleting) {
             $this->exists = false;
 
-            return $this->newModelQuery()->where($this->getKeyName(), $this->getKey())->forceDelete();
+            return $this->setKeysForSaveQuery($this->newModelQuery())->forceDelete();
         }
 
         return $this->runSoftDelete();
@@ -60,7 +77,7 @@ trait SoftDeletes
      */
     protected function runSoftDelete()
     {
-        $query = $this->newModelQuery()->where($this->getKeyName(), $this->getKey());
+        $query = $this->setKeysForSaveQuery($this->newModelQuery());
 
         $time = $this->freshTimestamp();
 
@@ -68,7 +85,7 @@ trait SoftDeletes
 
         $this->{$this->getDeletedAtColumn()} = $time;
 
-        if ($this->timestamps && !0 == $this->getUpdatedAtColumn()) {
+        if ($this->timestamps && !0 == ($this->getUpdatedAtColumn())) {
             $this->{$this->getUpdatedAtColumn()} = $time;
 
             $columns[$this->getUpdatedAtColumn()] = $this->fromDateTime($time);
@@ -112,14 +129,13 @@ trait SoftDeletes
      */
     public function trashed()
     {
-        return !0 == $this->{$this->getDeletedAtColumn()};
+        return !0 == ($this->{$this->getDeletedAtColumn()});
     }
 
     /**
      * Register a restoring model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
-     *
+     * @param  \Closure|string  $callback
      * @return void
      */
     public static function restoring($callback)
@@ -130,8 +146,7 @@ trait SoftDeletes
     /**
      * Register a restored model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
-     *
+     * @param  \Closure|string  $callback
      * @return void
      */
     public static function restored($callback)

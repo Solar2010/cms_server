@@ -27,6 +27,8 @@ class Admin extends Base
         'range_type'
     ];
 
+    protected $hidden = ['password'];
+
     /**
      * 管理员状态，1：启用 2：禁用
      */

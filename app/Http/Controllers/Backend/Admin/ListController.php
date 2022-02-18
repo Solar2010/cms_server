@@ -78,4 +78,18 @@ class ListController extends Controller
         $result = (new AdminService())->deleteAdmin($id);
         return success($result);
     }
+
+    /**
+     * 编辑管理员
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit(Request $request)
+    {
+        $data = $request->post();
+
+        $result = (new AdminService())->editAdmin($data);
+
+        return success($result);
+    }
 }

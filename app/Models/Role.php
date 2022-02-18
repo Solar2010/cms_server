@@ -11,4 +11,18 @@ class Role extends Base
      */
     protected $table = 'role';
 
+    protected $fillable = [
+        'id',
+        'admin_id',
+        'name',
+        'mark',
+        'name',
+        'weight'
+    ];
+
+    public function adminInfo()
+    {
+        return self::hasOne(Admin::class, 'id', 'admin_id');
+    }
+
 }

@@ -66,4 +66,16 @@ class PermissionService
         return Permission::query()
             ->create($data);
     }
+
+    /**
+     * 删除权限
+     * @param $ids
+     * @return mixed
+     */
+    public function delPermissions($ids)
+    {
+        return Permission::query()
+            ->whereIn('id', $ids)
+            ->delete();
+    }
 }
