@@ -19,21 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5458eed6-dfa7-4b47-a1e9-ff7e0fc0ae4f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/RolePermission.php" afterDir="false" />
+    <list default="true" id="5458eed6-dfa7-4b47-a1e9-ff7e0fc0ae4f" name="Default" comment="完成角色权限分配功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Handlers/SoftDeletes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Handlers/SoftDeletes.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/ListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/ListController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/PermissionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/PermissionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Admin/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/AdminService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/AdminService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/PermissionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/PermissionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/RoleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/RoleService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,11 +162,6 @@
       <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="25" />
-    <option name="width" value="1440" />
-    <option name="height" value="784" />
-  </component>
   <component name="ProjectId" id="24E5IAX8PODTpfppY17tdhiU25X" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -190,7 +173,7 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/mac/www/app/cms-server/vendor/laravel/framework/src/Illuminate/Database/Eloquent/SoftDeletes.php&#10;EnableCrossRequestMiddleware&#9;FILE&#9;file:///Users/mac/www/app/cms-server/app/Http/Middleware/EnableCrossRequestMiddleware.php&#10;registerBaseServiceProviders&#9;null&#9;null&#10;TestDatabases&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -239,7 +222,11 @@
       <workItem from="1639988515067" duration="638000" />
       <workItem from="1640083182371" duration="612000" />
       <workItem from="1643182824776" duration="612000" />
-      <workItem from="1645065918313" duration="17875000" />
+      <workItem from="1645065918313" duration="18542000" />
+      <workItem from="1645413402242" duration="1208000" />
+      <workItem from="1646012708186" duration="639000" />
+      <workItem from="1646015288695" duration="83000" />
+      <workItem from="1646020866320" duration="3788000" />
     </task>
     <task id="LOCAL-00001" summary="【优化中间件返回值】">
       <created>1627138126376</created>
@@ -269,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632742918743</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="完成角色权限分配功能">
+      <created>1645176635955</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1645176635955</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,11 +279,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="【优化中间件返回值】" />
     <MESSAGE value="【增加跨域中间件】" />
     <MESSAGE value="增加" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加" />
+    <MESSAGE value="完成角色权限分配功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成角色权限分配功能" />
   </component>
 </project>

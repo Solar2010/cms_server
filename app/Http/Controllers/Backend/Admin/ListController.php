@@ -59,11 +59,12 @@ class ListController extends Controller
             'username' => 'required',
             'account'  => 'required',
             'mobile'   => 'required',
-            'password' => 'required'
+            'password' => 'sometimes',
+            'email'    => 'required'
         ];
 
         $data = $this->validate($request, $rule);
-
+        $data['password'] = 888888;
         $result = (new AdminService()) -> addAdmin($data);
         return success($result);
     }
